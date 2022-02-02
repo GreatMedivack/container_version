@@ -299,6 +299,11 @@ end
 
 
 post '/cert_expire' do
+  
+  if request.env["HTTP_TOKEN"] != TOKEN
+    halt 401
+  end
+
   connection = PG.connect DB_PARAMS  
     connection.exec %Q( INSERT INTO 
                             expired_certs
